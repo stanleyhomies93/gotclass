@@ -1,13 +1,42 @@
 import React from 'react';
 import './Hero.css'; // Import the CSS file for styling
 import LocationInput from './LocationInput';
+import supabase from './supabaseClient';
 
 function Hero() {
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    
+    const formData = {
+      pickUpDate: e.target["pick-up-date"].value,
+      dropOffDate: e.target["drop-off-date"].value,
+      pickUpLocation: e.target["pick-up-location"].value,
+      dropOffLocation: e.target["drop-off-location"].value,
+      transferType: e.target["transfer"].value,
+    };
+
+    try {
+      // Insert data into Supabase
+      const { data, error } = await supabase
+        .from('bookings')
+        .insert([formData]);
+
+      if (error) {
+        throw error;
+      }
+
+      console.log('Booking submitted:', data);
+      // Optionally, you can handle success and error messages here
+    } catch (error) {
+      console.error('Error submitting form:', error);
+    }
+  };
+
   return (
     <section className="hero-section">
       <div className="hero-container">
         <div className="hero-left">
-          <form className="hero-form">
+          <form className="hero-form" onSubmit={handleSubmit}>
            
             <div className="date-picker-group">
               <div className="date-picker">
