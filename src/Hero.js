@@ -1,14 +1,27 @@
 import React from 'react';
 import './Hero.css'; // Import the CSS file for styling
 import LocationInput from './LocationInput';
-import { createClient } from '@supabase/supabase-js';
+import supabase from './supabaseClient'; // Ensure correct path to your Supabase client
 
-// Initialize Supabase client
-const supabaseUrl = 'https://cqyykwiqzujnqhnatuue.supabase.co'; // Replace with your Supabase URL
-const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxeXlrd2lxenVqbnFobmF0dXVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTk3NjQ4NDEsImV4cCI6MjAzNTM0MDg0MX0.7lAYeY8eqp7dQM5tq3ZmnCwJjtW2sPAPSkm0CgwgYZk'; // Replace with your Supabase key
-const supabase = createClient(supabaseUrl, supabaseKey);
+function loadGoogleMapsAPI() {
+  const script = document.createElement('script');
+  script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
+  script.async = true;
+  document.body.appendChild(script);
+}
 
 function Hero() {
+  useEffect(() => {
+    const loadGoogleMapsAPI = () => {
+      const script = document.createElement('script');
+      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
+      script.async = true;
+      document.body.appendChild(script);
+    };
+
+    loadGoogleMapsAPI();
+  }, []);
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     
@@ -42,7 +55,6 @@ function Hero() {
       <div className="hero-container">
         <div className="hero-left">
           <form className="hero-form" onSubmit={handleSubmit}>
-           
             <div className="date-picker-group">
               <div className="date-picker">
                 <label htmlFor="pick-up-date">Select pick up date:</label>
@@ -66,13 +78,13 @@ function Hero() {
               placeholder="Type to search for drop off location..."
             />
 
-              <div className="select-group">
-                <label htmlFor="transfer-type">Transfer type</label>
-                <select id="transfer" name="transfer">
-                  <option value="one-way">One way</option>
-                  <option value="return">Return</option>
-                  <option value="return-new">Return (new ride)</option>
-                </select>
+            <div className="select-group">
+              <label htmlFor="transfer">Transfer type</label>
+              <select id="transfer" name="transfer">
+                <option value="one-way">One way</option>
+                <option value="return">Return</option>
+                <option value="return-new">Return (new ride)</option>
+              </select>
             </div>
 
             <button type="submit" className="primary-button">Submit</button>
@@ -86,6 +98,5 @@ function Hero() {
     </section>
   );
 }
-
 
 export default Hero;
