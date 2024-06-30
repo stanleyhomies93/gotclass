@@ -1,7 +1,12 @@
 import React from 'react';
 import './Hero.css'; // Import the CSS file for styling
 import LocationInput from './LocationInput';
-import supabase from './supabaseClient';
+import { createClient } from '@supabase/supabase-js';
+
+// Initialize Supabase client
+const supabaseUrl = 'https://cqyykwiqzujnqhnatuue.supabase.co'; // Replace with your Supabase URL
+const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNxeXlrd2lxenVqbnFobmF0dXVlIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MTk3NjQ4NDEsImV4cCI6MjAzNTM0MDg0MX0.7lAYeY8eqp7dQM5tq3ZmnCwJjtW2sPAPSkm0CgwgYZk'; // Replace with your Supabase key
+const supabase = createClient(supabaseUrl, supabaseKey);
 
 function Hero() {
   const handleSubmit = async (e) => {
