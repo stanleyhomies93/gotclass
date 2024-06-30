@@ -1,14 +1,7 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import './Hero.css'; // Import the CSS file for styling
 import LocationInput from './LocationInput';
 import supabase from './supabaseClient'; // Ensure correct path to your Supabase client
-
-function loadGoogleMapsAPI() {
-  const script = document.createElement('script');
-  script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
-  script.async = true;
-  document.body.appendChild(script);
-}
 
 function Hero() {
   useEffect(() => {
