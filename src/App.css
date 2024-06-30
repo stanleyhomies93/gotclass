@@ -1,0 +1,105 @@
+@import './variables.css';
+
+.body {
+  font-family: var(--font-family);
+  background-color: var(--background-color);
+  color: var(--text-color);
+}
+
+.header {
+  background-color: var(--primary-color);
+  padding: var(--spacing-large);
+  text-align: center;
+}
+
+/* Navigation bar styling */
+nav {
+  background-color: white;
+  padding: var(--spacing-medium);
+  position: sticky;
+  top: 0;
+  z-index: 1000; /* Ensure it stays on top of other content */
+}
+
+.nav-container {
+  display: flex;
+  justify-content: space-between; /* Space between logo and menu-items */
+  align-items: center; /* Center items vertically */
+  padding: 0 var(--spacing-large); /* Padding inside the container */
+  width: 100%;
+  max-width: 1200px; /* Define maximum width */
+  margin: 0 auto; /* Center the container horizontally */
+}
+
+nav ul {
+  list-style-type: none;
+  padding: 0;
+  margin: 0;
+  display: flex;
+  align-items: center; /* Center items vertically */
+  width: 100%;
+  gap: var(--spacing-large); /* Space between logo and menu-items */
+}
+
+nav ul .logo img {
+  margin-right: auto; /* Pushes the logo to the left */
+}
+
+nav ul .menu-items {
+  gap: var(--spacing-medium); /* Adjust this value to increase the gap between menu items */
+  display: flex;
+  flex-grow: 1; /* Allows menu-items to grow and push to the right */
+  align-items: center;
+  justify-content: flex-end; /* Align items to the right */
+  padding: 0 var(--spacing-large); /* Padding on left and right */
+}
+nav ul li {
+  margin: 0 var(--spacing-small);
+}
+
+nav ul li.logo img {
+  height: 40px; /* Adjust size as needed */
+}
+
+nav ul li a {
+  color: black;
+  text-decoration: none;
+}
+
+nav ul li a:hover {
+  text-decoration: underline;
+}
+
+/* -------- */
+/* Main section content styling */
+
+.main {
+  padding: var(--spacing-medium);
+}
+
+.main section {
+  margin: var(--spacing-large) 0;
+}
+
+.main h2 {
+  color: var(--primary-color);
+  font-size: var(--font-size-large);
+}
+
+/* Button styling */
+.nav-button {
+  background-color: transparent; /* Make the background transparent */
+  color: var(--primary-color); /* Use primary color for text */
+  border: 2px solid var(--primary-color); /* Add a border with the primary color */
+  padding: var(--spacing-small) var(--spacing-medium);
+  cursor: pointer;
+  border-radius: 20px;
+  font-size: var(--font-size-medium);
+}
+
+.nav-button:hover {
+  background-color: var(--primary-color); /* Change background color on hover */
+  color: white; /* Change text color on hover */
+}
+
+/* src/Hero.css or your dedicated CSS file */
