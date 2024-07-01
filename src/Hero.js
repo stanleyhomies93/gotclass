@@ -5,25 +5,51 @@ import supabase from './supabaseClient'; // Ensure correct path to your Supabase
 
 function Hero() {
   useEffect(() => {
-    const loadGoogleMapsAPI = () => {
-      const script = document.createElement('script');
-      script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
-      script.async = true;
-      document.body.appendChild(script);
+    // Load Google Maps API script inside useEffect
+    const script = document.createElement('script');
+    script.src = `https://maps.googleapis.com/maps/api/js?key=${process.env.REACT_APP_GOOGLE_MAPS_API_KEY}&libraries=places`;
+    script.async = true;
+    script.onload = () => {
+      console.log('Google Maps API script loaded successfully');
+      initializeMap(); // Initialize map after script loads
     };
+    script.onerror = () => console.error('Error loading Google Maps API script');
+    document.body.appendChild(script);
 
-    loadGoogleMapsAPI();
+    return () => {
+      // Clean up script when component unmounts
+      document.body.removeChild(script);
+    };
   }, []);
+
+  const initializeMap = () => {
+    if (window.google && window.google.maps) {
+      const map = new window.google.maps.Map(document.getElementById('map'), {
+        center: { lat: -34.397, lng: 150.644 },
+        zoom: 8,
+      });
+
+      const input = document.getElementById('pick-up-location');
+      const autocomplete = new window.google.maps.places.Autocomplete(input);
+
+      autocomplete.addListener('place_changed', () => {
+        const place = autocomplete.getPlace();
+        console.log('Selected place:', place);
+      });
+    } else {
+      console.error('Google Maps API is not loaded');
+    }
+  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
     
     const formData = {
-      pickUpDate: e.target["pick-up-date"].value,
-      dropOffDate: e.target["drop-off-date"].value,
-      pickUpLocation: e.target["pick-up-location"].value,
-      dropOffLocation: e.target["drop-off-location"].value,
-      transferType: e.target["transfer"].value,
+      pickUpDate: e.target['pick-up-date'].value,
+      dropOffDate: e.target['drop-off-date'].value,
+      pickUpLocation: e.target['pick-up-location'].value,
+      dropOffLocation: e.target['drop-off-location'].value,
+      transferType: e.target['transfer'].value,
     };
 
     try {
